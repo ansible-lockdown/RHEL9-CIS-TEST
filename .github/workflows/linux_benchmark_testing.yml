@@ -43,7 +43,7 @@ jobs:
         defaults:
           run:
             shell: bash
-            working-directory: .github/workflows/github_linux_IaC
+            #working-directory: .github/workflows/github_linux_IaC
 
         # Steps represent a sequence of tasks that will be executed as part of the job
         steps:
@@ -59,7 +59,7 @@ jobs:
               uses: actions/checkout@v3
               with:
                 repository: ansible-lockdown/github_linux_IaC
-                path: github_linux_IaC
+                path: .github/workflows/github_linux_IaC
 
             - name: Add_ssh_key
               working-directory: .github/workflows
@@ -75,9 +75,16 @@ jobs:
             - name: DEBUG - Show IaC files
               if: env.ENABLE_DEBUG == 'true'
               run: |
+                echo "OSVAR = $OSVAR"
+                echo "BENCHMARK_TYPE = $env.BENCHMARK_TYPE"
+                pwd
                 ls
                 echo "################"
-                ls ../
+                ls .github/workflows/github_linux_IaC
+              env:
+                  # Imported from github variables this is used to load the relvent OS.tfvars file
+                  OSVAR: ${{ env.OSVAR }}
+                  BENCHMARK_TYPE: ${{ env.BENCHMARK_TYPE }}
 
 ### Build out the server
 
