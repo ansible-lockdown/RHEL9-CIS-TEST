@@ -43,7 +43,7 @@ jobs:
         defaults:
           run:
             shell: bash
-            # working-directory: .github/workflows/github_linux_IaC
+            working-directory: .github/workflows/github_linux_IaC
 
         # Steps represent a sequence of tasks that will be executed as part of the job
         steps:
@@ -83,8 +83,8 @@ jobs:
                 ls .github/workflows/github_linux_IaC
               env:
                   # Imported from github variables this is used to load the relvent OS.tfvars file
-                  OSVAR: ${{ env.OSVAR }}
-                  BENCHMARK_TYPE: ${{ env.BENCHMARK_TYPE }}
+                  OSVAR: ${{ vars.OSVAR }}
+                  BENCHMARK_TYPE: ${{ vars.BENCHMARK_TYPE }}
 
 ### Build out the server
 
@@ -93,24 +93,24 @@ jobs:
               run: terraform init
               env:
                 # Imported from github variables this is used to load the relvent OS.tfvars file
-                OSVAR: ${{ env.OSVAR }}
-                BENCHMARK_TYPE: ${{ env.BENCHMARK_TYPE }}
+                OSVAR: ${{ vars.OSVAR }}
+                BENCHMARK_TYPE: ${{ vars.BENCHMARK_TYPE }}
 
             - name: Terraform_Validate
               id: validate
               run: terraform validate
               env:
                 # Imported from github variables this is used to load the relvent OS.tfvars file
-                OSVAR: ${{ env.OSVAR }}
-                BENCHMARK_TYPE: ${{ env.BENCHMARK_TYPE }}
+                OSVAR: ${{ vars.OSVAR }}
+                BENCHMARK_TYPE: ${{ vars.BENCHMARK_TYPE }}
 
             - name: Terraform_Apply
               id: apply
               env:
                 AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
                 AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-                OSVAR: ${{ env.OSVAR }}
-                BENCHMARK_TYPE: ${{ env.BENCHMARK_TYPE }}
+                OSVAR: ${{ vars.OSVAR }}
+                BENCHMARK_TYPE: ${{ vars.BENCHMARK_TYPE }}
               run: terraform apply -var-file "github_vars.tfvars" -var-file "${OSVAR}.tfvars" --auto-approve -input=false
 
       ## Debug Section
@@ -144,4 +144,6 @@ jobs:
               env:
                   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
                   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  OSVAR: ${{ vars.OSVAR }}
+                  BENCHMARK_TYPE: ${{ vars.BENCHMARK_TYPE }}
               run: terraform destroy -var-file "github_vars.tfvars" -var-file "${OSVAR}.tfvars" --auto-approve -input=false
