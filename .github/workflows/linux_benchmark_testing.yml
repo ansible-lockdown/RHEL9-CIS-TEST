@@ -75,7 +75,6 @@ jobs:
             - name: DEBUG - Show IaC files
               if: env.ENABLE_DEBUG == 'true'
               run: |
-                pwd
                 ls
                 echo "################"
                 ls ../
