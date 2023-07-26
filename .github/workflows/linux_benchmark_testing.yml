@@ -57,7 +57,7 @@ jobs:
             - name: Clone github IaC plan
               uses: actions/checkout@v3
               with:
-                respository: ansible-lockdown/github_linux_IaC
+                repository: ansible-lockdown/github_linux_IaC
                 path: github_linux_IaC
 
             - name: Add_ssh_key
