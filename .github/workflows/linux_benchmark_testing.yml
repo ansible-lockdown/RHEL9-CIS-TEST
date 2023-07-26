@@ -43,7 +43,7 @@ jobs:
         defaults:
           run:
             shell: bash
-            working-directory: .github/workflows/github_linux_IaC
+            #working-directory: .github/workflows/github_linux_IaC
 
         # Steps represent a sequence of tasks that will be executed as part of the job
         steps:
