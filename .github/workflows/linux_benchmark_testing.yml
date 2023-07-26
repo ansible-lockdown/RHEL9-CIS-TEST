@@ -89,6 +89,8 @@ jobs:
                 echo "benchmark_type = $benchmark_type"
                 pwd
                 ls
+                echo "################"
+                ls .github/workflows/github_linux_IaC
               env:
                   # Imported from github variables this is used to load the relvent OS.tfvars file
                   OSVAR: ${{ vars.OSVAR }}
