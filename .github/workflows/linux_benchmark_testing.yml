@@ -76,14 +76,14 @@ jobs:
               if: env.ENABLE_DEBUG == 'true'
               run: |
                 echo "OSVAR = $OSVAR"
-                echo "BENCHMARK_TYPE = $BENCHMARK_TYPE"
+                echo "benchmark_type = $BENCHMARK_TYPE"
                 pwd
                 ls
 
               env:
                   # Imported from github variables this is used to load the relvent OS.tfvars file
                   OSVAR: ${{ vars.OSVAR }}
-                  BENCHMARK_TYPE: ${{ vars.BENCHMARK_TYPE }}
+                  benchmark_type: ${{ vars.BENCHMARK_TYPE }}
 
 ### Build out the server
 
