@@ -42,7 +42,6 @@ jobs:
             TF_VAR_repository: ${{ github.event.repository.name }}
         defaults:
           run:
-            shell: bash
             working-directory: .github/workflows/github_linux_IaC
 
         # Steps represent a sequence of tasks that will be executed as part of the job
