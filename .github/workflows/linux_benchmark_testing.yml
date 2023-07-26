@@ -42,7 +42,7 @@ jobs:
             working-directory: .github/workflows/github_linux_IaC
 
         env:
-            ENABLE_DEBUG: false
+            ENABLE_DEBUG: true
             # Imported as a variable by terraform
             TF_VAR_repository: ${{ github.event.repository.name }}
             # Imported from github variables this is used to load the relvent OS.tfvars file
@@ -75,6 +75,14 @@ jobs:
                 chmod 700 .ssh
                 echo $PRIVATE_KEY > .ssh/github_actions.pem
                 chmod 600 .ssh/github_actions.pem
+            
+            - name: DEBUG - Show IaC files
+              if: env.ENABLE_DEBUG == 'true'
+              run: |
+                pwd
+                ls
+                echo "################"
+                ls ../
 
 ### Build out the server
 
