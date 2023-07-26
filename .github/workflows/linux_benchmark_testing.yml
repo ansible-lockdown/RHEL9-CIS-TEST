@@ -75,10 +75,16 @@ jobs:
             - name: DEBUG - Show IaC files
               if: env.ENABLE_DEBUG == 'true'
               run: |
+                echo "OSVAR = ${OSVAR}"
+                echo "BENCHMARK_TYPE = ${BENCHMARK_TYPE}"
                 pwd
                 ls
                 echo "################"
                 ls ../
+              env:
+                  # Imported from github variables this is used to load the relvent OS.tfvars file
+                  OSVAR: ${{ env.OSVAR }}
+                  BENCHMARK_TYPE: ${{ env.BENCHMARK_TYPE }}
 
 ### Build out the server
 
