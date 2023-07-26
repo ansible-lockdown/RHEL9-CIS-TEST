@@ -77,9 +77,10 @@ jobs:
               run: |
                 echo "OSVAR = ${OSVAR}"
                 echo "BENCHMARK_TYPE = ${BENCHMARK_TYPE}"
+                pwd
                 ls
                 echo "################"
-                ls ../
+                ls .github/workflows/github_linux_IaC
               env:
                   # Imported from github variables this is used to load the relvent OS.tfvars file
                   OSVAR: ${{ env.OSVAR }}
