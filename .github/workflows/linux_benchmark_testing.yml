@@ -67,9 +67,6 @@ jobs:
               run: |
                 python -m pip install -U pre-commit detect-secrets yamllint ansible-lint==6.17.2
 
-            - name: Run pre-commits
-              uses: pre-commit/action@v3.0.0
-
             - name: Add_ssh_key
               working-directory: .github/workflows
               env:
