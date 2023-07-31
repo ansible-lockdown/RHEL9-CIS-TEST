@@ -53,6 +53,10 @@ jobs:
               uses: actions/checkout@v3
               with:
                   ref: ${{ github.event.pull_request.head.sha }}
+                  
+          # Run lint against the code before running pipeline
+            - name: Run ansible-lint
+              uses: ansible/ansible-lint@v6
 
           # Pull in terraform code for linux servers
             - name: Clone github IaC plan
