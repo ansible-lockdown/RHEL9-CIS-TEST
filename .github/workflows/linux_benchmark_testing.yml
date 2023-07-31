@@ -66,6 +66,10 @@ jobs:
             - name: Setup system for pre-commit checks
               run: |
                 python -m pip install -U pre-commit detect-secrets yamllint ansible-lint==6.17.2
+          
+          # Run lint against the code before running pipeline
+            - name: Run ansible-lint
+              uses: ansible/ansible-lint@v6
 
             - name: Add_ssh_key
               working-directory: .github/workflows
