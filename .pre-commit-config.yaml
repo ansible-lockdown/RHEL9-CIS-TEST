@@ -1,4 +1,7 @@
 ---
+##### CI for use by github no need for action
+ci:
+    autofix_prs: false
 
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
