@@ -1,5 +1,8 @@
 ---
 collections:
     - name: community.general
+      source: https://github.com/ansible-collections/community.general
     - name: community.crypto
+      source: https://github.com/ansible-collections/community.crypto
     - name: ansible.posix
+      source: https://github.com/ansible-collections/ansible.posix
