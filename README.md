@@ -171,6 +171,10 @@ uses:
 - ansible-core 2.12
 - ansible collections - pulls in the latest version based on requirements file
 - runs the audit using the devel branch
+- build system
+- lint checks
+- pre-commit check
+- run playbook
 - This is an automated test that occurs on pull requests into devel
 
 ## Local Testing
