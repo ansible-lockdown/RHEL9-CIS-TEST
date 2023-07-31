@@ -180,5 +180,14 @@ ansible-core 2.13.4  - python 3.10
 
 - makefile - this is there purely for testing and initial setup purposes.
 
-[pre-commit](https://pre-commit.com) has been added to the system
+[pre-commit-ci](https://pre-commit.ci) has been added to the system
 this is run automatically using pre-commit-ci in the pipeline but can also be run locally if installed.
+If it fails due to pre-commit you have the ability to call a rerun.
+
+re-running a pull request: you can trigger a re-run on a pull request by commenting
+
+```sh
+pre-commit.ci run
+```
+
+More information can be found at [pre-commit-ci](https://pre-commit.ci)
