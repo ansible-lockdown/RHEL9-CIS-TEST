@@ -180,4 +180,5 @@ ansible-core 2.13.4  - python 3.10
 
 - makefile - this is there purely for testing and initial setup purposes.
 
-precommit added to files under .precommit/
+[pre-commit](https://pre-commit.com) has been added to the system
+this is run automatically using pre-commit-ci in the pipeline but canb also be run locally if installed.
