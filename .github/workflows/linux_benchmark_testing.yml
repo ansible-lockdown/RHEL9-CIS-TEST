@@ -39,7 +39,7 @@ jobs:
       # The type of runner that the job will run on
         runs-on: ubuntu-latest
         env:
-            ENABLE_DEBUG: true
+            ENABLE_DEBUG: false
             # Imported as a variable by terraform
             TF_VAR_repository: ${{ github.event.repository.name }}
         defaults:
@@ -63,6 +63,13 @@ jobs:
                 repository: ansible-lockdown/github_linux_IaC
                 path: .github/workflows/github_linux_IaC
 
+            - name: Setup system for pre-commit checks
+              run: |
+                python -m pip install -U pre-commit detect-secrets ansible-lint == "6.17.2" yamllint
+
+            - name: Run pre-commits
+              uses: pre-commit/action@v3.0.0
+
             - name: Add_ssh_key
               working-directory: .github/workflows
               env:
@@ -73,7 +80,7 @@ jobs:
                 chmod 700 .ssh
                 echo $PRIVATE_KEY > .ssh/github_actions.pem
                 chmod 600 .ssh/github_actions.pem
-            
+
             - name: DEBUG - Show IaC files
               if: env.ENABLE_DEBUG == 'true'
               run: |
@@ -81,7 +88,6 @@ jobs:
                 echo "benchmark_type = $benchmark_type"
                 pwd
                 ls
-
               env:
                   # Imported from github variables this is used to load the relvent OS.tfvars file
                   OSVAR: ${{ vars.OSVAR }}
