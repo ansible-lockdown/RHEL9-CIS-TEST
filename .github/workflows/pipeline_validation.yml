@@ -40,6 +40,11 @@
               fetch-depth: 0
               ref: ${{ github.event.pull_request.head.sha }}
 
+          - name: Run ansible-lint
+            uses: ansible/ansible-lint-action@v6
+            with:
+              path: ./site.yml
+
       # This workflow contains a single job which tests the playbook
       playbook-test:
         # The type of runner that the job will run on
@@ -89,34 +94,34 @@
               OSVAR: ${{ vars.OSVAR }}
               benchmark_type: ${{ vars.BENCHMARK_TYPE }}
 
-            # Run lint against the code before running pipeline
-            - name: Run ansible-lint
-              uses: ansible/ansible-lint@v6
+          # Run lint against the code before running pipeline
+          - name: Run ansible-lint
+            uses: ansible/ansible-lint@v6
 
-            - name: Add_ssh_key
-              working-directory: .github/workflows
-              env:
-                  SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-                  PRIVATE_KEY: "${{ secrets.SSH_PRV_KEY }}"
-              run: |
-                mkdir .ssh
-                chmod 700 .ssh
-                echo $PRIVATE_KEY > .ssh/github_actions.pem
-                chmod 600 .ssh/github_actions.pem
+          - name: Add_ssh_key
+            working-directory: .github/workflows
+            env:
+                SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+                PRIVATE_KEY: "${{ secrets.SSH_PRV_KEY }}"
+            run: |
+              mkdir .ssh
+              chmod 700 .ssh
+              echo $PRIVATE_KEY > .ssh/github_actions.pem
+              chmod 600 .ssh/github_actions.pem
 
-            - name: DEBUG - Show IaC files
-              if: env.ENABLE_DEBUG == 'true'
-              run: |
-                echo "OSVAR = $OSVAR"
-                echo "benchmark_type = $benchmark_type"
-                pwd
-                ls
-                echo "################"
-                ls .github/workflows/github_linux_IaC
-              env:
-                  # Imported from github variables this is used to load the relvent OS.tfvars file
-                  OSVAR: ${{ vars.OSVAR }}
-                  benchmark_type: ${{ vars.BENCHMARK_TYPE }}
+          - name: DEBUG - Show IaC files
+            if: env.ENABLE_DEBUG == 'true'
+            run: |
+              echo "OSVAR = $OSVAR"
+              echo "benchmark_type = $benchmark_type"
+              pwd
+              ls
+              echo "################"
+              ls .github/workflows/github_linux_IaC
+            env:
+                # Imported from github variables this is used to load the relvent OS.tfvars file
+                OSVAR: ${{ vars.OSVAR }}
+                benchmark_type: ${{ vars.BENCHMARK_TYPE }}
 
           - name: Terraform_Init
             id: init
@@ -143,12 +148,12 @@
               TF_VAR_benchmark_type: ${{ vars.BENCHMARK_TYPE }}
             run: terraform apply -var-file "github_vars.tfvars" -var-file "${OSVAR}.tfvars" --auto-approve -input=false
 
-    ## Debug Section
+## Debug Section
           - name: DEBUG - Show Ansible hostfile
             if: env.ENABLE_DEBUG == 'true'
             run: cat hosts.yml
 
-        # Aws deployments taking a while to come up insert sleep or playbook fails
+    # Aws deployments taking a while to come up insert sleep or playbook fails
 
           - name: Sleep for 60 seconds
             run: sleep 60s
