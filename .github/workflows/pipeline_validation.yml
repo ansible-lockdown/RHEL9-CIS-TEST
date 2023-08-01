@@ -94,31 +94,6 @@
               OSVAR: ${{ vars.OSVAR }}
               benchmark_type: ${{ vars.BENCHMARK_TYPE }}
 
-          - name: Add_ssh_key
-            working-directory: .github/workflows
-            env:
-                SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-                PRIVATE_KEY: "${{ secrets.SSH_PRV_KEY }}"
-            run: |
-              mkdir .ssh
-              chmod 700 .ssh
-              echo $PRIVATE_KEY > .ssh/github_actions.pem
-              chmod 600 .ssh/github_actions.pem
-
-          - name: DEBUG - Show IaC files
-            if: env.ENABLE_DEBUG == 'true'
-            run: |
-              echo "OSVAR = $OSVAR"
-              echo "benchmark_type = $benchmark_type"
-              pwd
-              ls
-              echo "################"
-              ls .github/workflows/github_linux_IaC
-            env:
-                # Imported from github variables this is used to load the relvent OS.tfvars file
-                OSVAR: ${{ vars.OSVAR }}
-                benchmark_type: ${{ vars.BENCHMARK_TYPE }}
-
           - name: Terraform_Init
             id: init
             run: terraform init
