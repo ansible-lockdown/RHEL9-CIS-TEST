@@ -172,9 +172,9 @@ uses:
 - ansible collections - pulls in the latest version based on requirements file
 - runs the audit using the devel branch
 - build system
-- lint checks
+- ansible-lint checks
 - pre-commit check
-- run playbook
+- run playbook on test host
 - This is an automated test that occurs on pull requests into devel
 
 ## Local Testing
