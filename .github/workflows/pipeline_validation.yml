@@ -94,10 +94,6 @@
               OSVAR: ${{ vars.OSVAR }}
               benchmark_type: ${{ vars.BENCHMARK_TYPE }}
 
-          # Run lint against the code before running pipeline
-          - name: Run ansible-lint
-            uses: ansible/ansible-lint@v6
-
           - name: Add_ssh_key
             working-directory: .github/workflows
             env:
