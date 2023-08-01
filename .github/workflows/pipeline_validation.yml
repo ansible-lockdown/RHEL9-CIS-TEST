@@ -1,12 +1,7 @@
 ---
 
-  # This is a basic workflow to help you get started with Actions
+  name: pipeline_validation
 
-  name: linux_benchmark_pipeline
-
-  # Controls when the action will run.
-  # Triggers the workflow on push or pull request
-  # events but only for the devel branch
   on: # yamllint disable-line rule:truthy
     pull_request_target:
         types: [opened, reopened, synchronize]
@@ -35,6 +30,7 @@
                     Congrats on opening your first pull request and thank you for taking the time to help improve Ansible-Lockdown!
                     Please join in the conversation happening on the [Discord Server](https://discord.io/ansible-lockdown) as well.
 
+    # Carries out lint tests on the content
       linting:
         runs-on: ubuntu-latest
         steps:
@@ -44,12 +40,12 @@
               fetch-depth: 0
               ref: ${{ github.event.pull_request.head.sha }}
 
-      # This workflow contains a single job called "build"
+      # This workflow contains a single job which tests the playbook
       playbook-test:
         # The type of runner that the job will run on
         runs-on: ubuntu-latest
         env:
-          ENABLE_DEBUG: false
+          ENABLE_DEBUG: ${{ vars.ENABLE_DEBUG }}
           # Imported as a variable by terraform
           TF_VAR_repository: ${{ github.event.repository.name }}
         defaults:
@@ -93,7 +89,34 @@
               OSVAR: ${{ vars.OSVAR }}
               benchmark_type: ${{ vars.BENCHMARK_TYPE }}
 
-  ### Build out the server
+            # Run lint against the code before running pipeline
+            - name: Run ansible-lint
+              uses: ansible/ansible-lint@v6
+
+            - name: Add_ssh_key
+              working-directory: .github/workflows
+              env:
+                  SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+                  PRIVATE_KEY: "${{ secrets.SSH_PRV_KEY }}"
+              run: |
+                mkdir .ssh
+                chmod 700 .ssh
+                echo $PRIVATE_KEY > .ssh/github_actions.pem
+                chmod 600 .ssh/github_actions.pem
+
+            - name: DEBUG - Show IaC files
+              if: env.ENABLE_DEBUG == 'true'
+              run: |
+                echo "OSVAR = $OSVAR"
+                echo "benchmark_type = $benchmark_type"
+                pwd
+                ls
+                echo "################"
+                ls .github/workflows/github_linux_IaC
+              env:
+                  # Imported from github variables this is used to load the relvent OS.tfvars file
+                  OSVAR: ${{ vars.OSVAR }}
+                  benchmark_type: ${{ vars.BENCHMARK_TYPE }}
 
           - name: Terraform_Init
             id: init
@@ -146,7 +169,7 @@
         # Remove test system - User secrets to keep if necessary
 
           - name: Terraform_Destroy
-            if: always()
+            if: always() && env.ENABLE_DEBUG == 'false'
             env:
               AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
               AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
