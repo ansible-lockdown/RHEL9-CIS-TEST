@@ -53,10 +53,6 @@
             with:
               ref: ${{ github.event.pull_request.head.sha }}
 
-          - name: Setup system for pre-commit checks
-            run: |
-              python -m pip install -U pre-commit detect-secrets yamllint ansible-lint==6.17.2
-
           - name: Run ansible-lint
             uses: ansible/ansible-lint-action@v6
             with:
