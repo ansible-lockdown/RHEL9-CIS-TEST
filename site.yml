@@ -3,5 +3,4 @@
   become: true
 
   roles:
-
       - role: "{{ playbook_dir }}"
