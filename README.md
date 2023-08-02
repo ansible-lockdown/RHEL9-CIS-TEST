@@ -16,11 +16,10 @@
 ![Discord Badge](https://img.shields.io/discord/925818806838919229?logo=discord)
 
 ![Release Branch](https://img.shields.io/badge/Release%20Branch-Main-brightgreen)
-![Release Tag](https://img.shields.io/github/v/tag/ansible-lockdown/RHEL9-CIS-TEST?label=Release%20Tag&&color=success)
+![Release Tag](https://img.shields.io/github/v/release/ansible-lockdown/RHEL9-CIS-TEST)
 ![Release Date](https://img.shields.io/github/release-date/ansible-lockdown/RHEL9-CIS-TEST)
 
 [![Main pipeline status](https://github.com/ansible-lockdown/RHEL9-CIS-TEST/actions/workflows/main_pipeline_validation.yml/badge.svg?)](https://github.com/ansible-lockdown/RHEL9-CIS-TEST/actions/workflows/main_pipeline_validation.yml)
-![Main Release Date](https://img.shields.io/github/release-date/ansible-lockdown/RHEL9-CIS-TEST)
 
 [![Devel pipeline status](https://github.com/ansible-lockdown/RHEL9-CIS-TEST/actions/workflows/devel_pipeline_validation.yml/badge.svg?)](https://github.com/ansible-lockdown/RHEL9-CIS-TEST/actions/workflows/devel_pipeline_validation.yml)
 ![Devel Commits](https://img.shields.io/github/commit-activity/m/ansible-lockdown/RHEL9-CIS-TEST/devel?color=dark%20green&label=Devel%20Branch%20commits)
