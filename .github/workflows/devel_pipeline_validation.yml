@@ -1,6 +1,6 @@
 ---
 
-    name: devel_pipeline_validation
+    name: Devel pipeline
 
     on: # yamllint disable-line rule:truthy
       pull_request_target:
