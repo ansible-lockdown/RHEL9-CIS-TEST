@@ -7,7 +7,7 @@
       fail_msg: "This role can only be run against Supported OSs. {{ ansible_distribution }} {{ ansible_distribution_major_version }} is not supported."
       success_msg: "This role is running against a supported OS {{ ansible_distribution }} {{ ansible_distribution_major_version }}"
   when:
-      - os_check
+      - os_check  # Can be overridden for CentOS
       - not system_is_ec2
   tags:
       - always
