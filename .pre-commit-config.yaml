@@ -37,7 +37,7 @@ repos:
     exclude: package.lock.json
 
 - repo: https://github.com/ansible-community/ansible-lint
-  rev: v6.18.0
+  rev: v6.20.2
   hooks:
   - id: ansible-lint
     name: Ansible-lint
